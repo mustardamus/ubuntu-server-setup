@@ -16,6 +16,7 @@ Additional features to the original script:
 * apt update/upgrade/autoremove
 * install nodejs nginx build-essential
 * timezone changed
+* allow http in ufw
 * reboot after done
 
 # Installation

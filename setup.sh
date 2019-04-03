@@ -54,6 +54,8 @@ function main() {
 
     echo "Installing Network Time Protocol... " >&3
     configureNTP
+    
+    serviceSetup
 
     sudo service ssh restart
 
@@ -61,7 +63,7 @@ function main() {
 
     echo "Setup Done! Log file is located at ${output_file}" >&3
     
-    echo "Rebooting. You can log back in with your username and SSH key..."
+    echo "Rebooting. You can log back in with your username and SSH key..." >&3
     reboot now
 }
 
