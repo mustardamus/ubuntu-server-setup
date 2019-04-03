@@ -18,6 +18,15 @@ includeDependencies
 output_file="output.log"
 
 function main() {
+    curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+    
+    apt update
+    apt upgrade -y
+    apt autoremove -y
+    apt install -y nodejs nginx build-essential
+    
+    npm install npm -g
+    
     read -rp "Enter the username of the new user account:" username
 
     promptForPassword
@@ -51,6 +60,9 @@ function main() {
     cleanup
 
     echo "Setup Done! Log file is located at ${output_file}" >&3
+    
+    echo "Rebooting. You can log back in with your username and SSH key..."
+    reboot now
 }
 
 function setupSwap() {
@@ -80,10 +92,10 @@ function logTimestamp() {
 }
 
 function setupTimezone() {
-    echo -ne "Enter the timezone for the server (Default is 'Asia/Singapore'):\n" >&3
+    echo -ne "Enter the timezone for the server (Default is 'Europe/Berlin'):\n" >&3
     read -r timezone
     if [ -z "${timezone}" ]; then
-        timezone="Asia/Singapore"
+        timezone="Europe/Berlin"
     fi
     setTimezone "${timezone}"
     echo "Timezone is set to $(cat /etc/timezone)" >&3
