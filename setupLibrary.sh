@@ -146,33 +146,3 @@ function revertSudoers() {
     sudo cp /etc/sudoers.bak /etc/sudoers
     sudo rm -rf /etc/sudoers.bak
 }
-
-# Setup a systemd service to manage the node.js application
-function serviceSetup() {
-    local username=${1}
-    
-    cat > /etc/systemd/system/app.service << SUDO
-[Unit]
-Description=Node.js Application
-#Requires=After=mysql.service
-
-[Service]
-ExecStart=/usr/bin/npm start
-WorkingDirectory=/home/$username/app/current
-Restart=always
-RestartSec=20
-StandardOutput=syslog
-StandardError=syslog
-SyslogIdentifier=nodejs-example
-User=$username
-Environment=NODE_ENV=production
-SUDO
-
-    systemctl enable app
-    systemctl start app
-    
-    # so the user can restart the node.js app without entering the password
-    cat > /etc/sudoers.d/$username << SUDO
-$username ALL= NOPASSWD: /bin/systemctl restart app
-SUDO
-}

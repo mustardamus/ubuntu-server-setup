@@ -54,8 +54,6 @@ function main() {
 
     echo "Installing Network Time Protocol... " >&3
     configureNTP
-    
-    serviceSetup
 
     sudo service ssh restart
 
