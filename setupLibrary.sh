@@ -158,20 +158,21 @@ Description=Node.js Application
 
 [Service]
 ExecStart=/usr/bin/npm start
-WorkingDirectory=/home/${username}/app/current
+WorkingDirectory=/home/$username/app/current
 Restart=always
 RestartSec=20
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=nodejs-example
-User=${username}
+User=$username
 Environment=NODE_ENV=production
 SUDO
 
     systemctl enable app
     systemctl start app
     
-    cat > /etc/sudoers.d/${username} << SUDO
-${username} ALL= NOPASSWD: /bin/systemctl restart app
+    # so the user can restart the node.js app without entering the password
+    cat > /etc/sudoers.d/$username << SUDO
+$username ALL= NOPASSWD: /bin/systemctl restart app
 SUDO
 }
